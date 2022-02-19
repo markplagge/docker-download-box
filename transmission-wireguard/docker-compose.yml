@@ -1,0 +1,59 @@
+ 
+ version: "3.4"
+ services:
+   wireguard:
+     image: linuxserver/wireguard
+     container_name: wireguard
+     cap_add:
+       - NET_ADMIN
+       - SYS_MODULE
+     environment:
+       - PUID=${PUID:-1000}
+       - PGID=${PGID:-1111}
+       - TZ=${TZ}
+ #      - SERVERURL=wireguard.domain.com #optional
+ #      - SERVERPORT=51820 #optional
+ #      - PEERS=1 #optional
+ #      - PEERDNS=auto #optional
+ #      - INTERNAL_SUBNET=10.13.13.0 #optional
+     volumes:
+       - ${VPN_CONFIG}:/config
+       - /lib/modules:/lib/modules
+     ports:
+       - 51820:51820/udp
+     sysctls:
+       - net.ipv4.conf.all.src_valid_mark=1
+     restart: unless-stopped
+ 
+   transmission:
+     image: linuxserver/transmission
+     container_name: transmission
+     environment:
+       - PUID=1000
+       - PGID=100
+       - TZ=Europe/Amsterdam
+ #      - TRANSMISSION_WEB_HOME=/combustion-release/ 
+ #optional
+ #      - USER=user #optional
+ #      - PASS=password #optional
+     volumes:
+       - ${DATA_ROOT}:/config
+       - /path/to/downloads:/downloads
+       - /path/to/watch:/watch
+     network_mode: service:wireguard
+     restart: unless-stopped
+ 
+   nginx:
+     image: nginx
+     container_name: nginx
+     environment:
+        - PUID=${PUID:-1000}
+        - PGID=${PGID:-1111}
+        - TZ=${TZ}
+     volumes:
+       - ${NGINX_CONFIG}:/etc/nginx/nginx.conf:ro
+     ports:
+       - 9091:9091
+     restart: unless-stopped
+
+ 
