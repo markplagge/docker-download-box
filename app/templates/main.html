@@ -87,11 +87,11 @@
 			
 			<h3> {{ warning }} </h3>
 			
-
+			<p> {{ urls }} </p>
 			<h3> Services Available: </h3>
 			<ul>
 				{% for service in services %}
-				<li>{{ service }} at <a href=http://starbase.local:{{ urls[service] }}> starbase.local:{{ urls[service] }}</a></li>
+				<li>{{ service }} at <a href=http://starbase.local:{{ urls[service.lower()] }}> starbase.local:{{ urls[service.lower()] }}</a></li>
 				{% endfor %}
 			</ul>
 

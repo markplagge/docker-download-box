@@ -40,6 +40,9 @@ def generate_warning_services():
 @app.route('/')
 def index():
     warning, services, urls = generate_warning_services()
+    print("-----")
+    print(urls)
+    print("-----")
     return render_template('main.html',welcome=welcome,subtitle=subtitle,warning=warning,services=services,urls=urls)
 
 if __name__ == '__main__':
