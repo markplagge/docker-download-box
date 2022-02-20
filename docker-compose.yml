@@ -7,7 +7,7 @@ services:
         - 9117:9117
         container_name: jackett
         image: linuxserver/jackett:latest
-        restart: unless-stopped
+
         
         environment:
         - PUID=${PUID} # default user id, defined in .env
@@ -50,7 +50,14 @@ services:
             - ${MEDIA_SERVER_ROOT}/config/radarr:/config # config files
             - ${MEDIA_SERVER_ROOT}/complete/movies:/movies # movies folder
             - ${MEDIA_SERVER_ROOT}/downloads:/downloads # download folder
-    
+    main_app:
+        hostname: app
+        container_name: app
+        image:  plaggm/ddb-flask-app
+        restart: unless-stopped
+
+
+
     main_nginx:
         container_name: tracker_nginx
         image: nginx
@@ -62,4 +69,4 @@ services:
             - ${TRACKER_NGINX_CONFIG}:/etc/nginx/nginx.conf:ro
         restart: unless-stopped
         ports:
-            - "9000:9000"
+            - "80"

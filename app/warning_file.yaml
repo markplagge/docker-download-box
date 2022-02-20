@@ -1,0 +1,6 @@
+days: 10
+services:
+- Radarr
+- Sonarr
+- Jackett
+- Transmission

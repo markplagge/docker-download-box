@@ -1,0 +1,3 @@
+[submodule "flask_rev"]
+	path = app/flask-reverse-proxy
+	url = https://github.com/wilbertom/flask-reverse-proxy.git
