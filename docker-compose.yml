@@ -69,4 +69,9 @@ services:
             - ${TRACKER_NGINX_CONFIG}:/etc/nginx/nginx.conf:ro
         restart: unless-stopped
         ports:
-            - "80"
+            - "80:80"
+        depends_on:
+            - main_app
+            - sonarr
+            - radarr
+            - jackett

@@ -1,6 +1,11 @@
 days: 10
 services:
-- Radarr
-- Sonarr
-- Jackett
-- Transmission
+    - Radarr
+    - Sonarr
+    - Jackett
+    - Transmission
+service_urls:
+    - radarr: 7878
+    - sonarr: 8989
+    - jackett: 9117
+    - transmission: 9091

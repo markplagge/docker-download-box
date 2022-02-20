@@ -91,7 +91,7 @@
 			<h3> Services Available: </h3>
 			<ul>
 				{% for service in services %}
-				<li>{{ service }} at <a href=http://starbase.local/{{ service.lower() }}> starbase.local/{{ service.lower() }}</a></li>
+				<li>{{ service }} at <a href=http://starbase.local:{{ urls[service] }}> starbase.local:{{ urls[service] }}</a></li>
 				{% endfor %}
 			</ul>
 
