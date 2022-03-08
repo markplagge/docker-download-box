@@ -1,0 +1,114 @@
+version: "3.4"
+services:
+  jackett:
+    container_name: jackett
+    environment:
+      PGID: "100"
+      PUID: "1000"
+      TZ: America/Denver
+    hostname: jackett
+    image: linuxserver/jackett:latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 9117
+      published: 9118
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /etc/localtime
+      target: /etc/localtime
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /opt/remotefs/media_server/downloads/torrent-blackhole
+      target: /downloads
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /opt/remotefs/media_server/config/jackett
+      target: /config
+      bind:
+        create_host_path: true
+  radarr:
+    container_name: radarr
+    environment:
+      PGID: "100"
+      PUID: "1000"
+      TZ: America/Denver
+    hostname: radarr
+    image: linuxserver/radarr:latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 7878
+      published: 7878
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /etc/localtime
+      target: /etc/localtime
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /opt/remotefs/media_server/config/radarr
+      target: /config
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /opt/remotefs/media_server/complete/movies
+      target: /movies
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /opt/remotefs/media_server/downloads
+      target: /downloads
+      bind:
+        create_host_path: true
+  sonarr:
+    container_name: sonarr
+    environment:
+      PGID: "100"
+      PUID: "1000"
+      TZ: America/Denver
+    hostname: sonarr
+    image: linuxserver/sonarr:latest
+    networks:
+      default: null
+    ports:
+    - mode: ingress
+      target: 8989
+      published: 8989
+      protocol: tcp
+    restart: unless-stopped
+    volumes:
+    - type: bind
+      source: /etc/localtime
+      target: /etc/localtime
+      read_only: true
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /opt/remotefs/media_server/config/sonarr
+      target: /config
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /opt/remotefs/media_server/complete/tv
+      target: /tv
+      bind:
+        create_host_path: true
+    - type: bind
+      source: /opt/remotefs/media_server/downloads
+      target: /downloads
+      bind:
+        create_host_path: true
+networks:
+  default:
+    name: docker-download-box_default

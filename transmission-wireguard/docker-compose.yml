@@ -31,15 +31,15 @@
      environment:
        - PUID=1000
        - PGID=100
-       - TZ=Europe/Amsterdam
+       - TZ=US/Denver
  #      - TRANSMISSION_WEB_HOME=/combustion-release/ 
  #optional
  #      - USER=user #optional
  #      - PASS=password #optional
      volumes:
-       - ${DATA_ROOT}:/config
-       - /path/to/downloads:/downloads
-       - /path/to/watch:/watch
+       - ${MEDIA_SERVER_ROOT}/config/trans:/config
+       - ${MEDIA_SERVER_ROOT}/downloads:/downloads
+       - ${MEDIA_SERVER_ROOT}/downloads/watch:/watch
      network_mode: service:wireguard
      restart: unless-stopped
  

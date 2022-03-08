@@ -1,0 +1,26 @@
+services:
+  plex:
+    image: lscr.io/linuxserver/plex
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1024
+      - VERSION=docker
+      - PLEX_CLAIM=claim-r5--d4z2a9oB7zszwMFw #optional
+    volumes:
+      - /opt/remotefs/media_server/config:/config
+      - /opt/remotefs/media_server/complete/tv:/tv
+      - /opt/remotefs/media_server/complete/movies:/movies
+    restart: unless-stopped
+    ports:
+      - "32400:32400" 
+      - "31900:1900" 
+      - "33005:3005" 
+      - "35353:5353" 
+      - "38324:8324" 
+      - "32410:32410" 
+      - "32412:32412" 
+      - "32413:32413" 
+      - "32414:32414" 
+      - "32469:32469"
