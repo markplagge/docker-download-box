@@ -1,11 +1,30 @@
 days: 10
 service_urls:
+  plex: 32400
   jackett: 9117
   radarr: 7878
   sonarr: 8989
   transmission: 9091
+  prowlerr: 9696
+  mylar: 8090
+  bazar: 6767
+  overseer: 5055
 services:
-- Radarr
-- Sonarr
-- Jackett
-- Transmission
+  - Plex
+  - Radarr
+  - Sonarr
+  - Jackett
+  - Transmission
+  - Prowlerr
+  - Mylar3
+  - Bazar
+  - Overseer
+service_ovr:
+  transmission: http://odroid.local
+  plex: http://starbase.local
+default_server: http://starbase.local
+top_services:
+        - Plex
+        - Overseer
+        - Sonarr
+        - Radarr

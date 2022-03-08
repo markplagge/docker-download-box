@@ -31,12 +31,12 @@
 					</div> 
 				</div> <!-- /cascade-wrapper -->
 				<div class="button-col">
-					<div class="button" id="top-left"><a href="">01</a></div>
-					<div class="button" id="bottom-left"><a href="">02</a></div>
+					<div class="button" id="top-left"><a href="{{ ts_d[ts_names[1].lower()] }}">{{ ts_names[1] }}</a></div>
+					<div class="button" id="bottom-left"><a href="{{ts_d[ts_names[2].lower()] }}">{{ ts_names[2] }}</a></div>
 				</div>
 				<div class="button-col">
-					<div class="button" id="top-right"><a href="">03</a></div>
-					<div class="button" id="bottom-right"><a href="">04</a></div>
+					<div class="button" id="top-right"><a href="{{ ts_d[ts_names[3].lower()] }}">{{ ts_names[3] }}</a></div>
+					<div class="button" id="bottom-right"><a href="{{ ts_d[ts_names[4].lower()] }}">{{ ts_names[4]  }}</a></div>
 				</div>
 			</div> <!-- /data-cascade-button-group -->
 		<div class="top-corner-bg">
@@ -85,18 +85,17 @@
 			
 			<h2>{{ subtitle }} </h2>
 			
-			<h3> {{ warning }} </h3>
+			<h3 class="go-orange"> {{ warning }}  </h3>
 			
 			<p> {{ urls }} </p>
 			<h3> Services Available: </h3>
 			<ul>
 				{% for service in services %}
-				<li>{{ service }} at <a href=http://starbase.local:{{ urls[service.lower()] }}> starbase.local:{{ urls[service.lower()] }}</a></li>
+				<li>{{ service }} at <a href={{ urls[service.lower()] }}> starbase.local:{{ urls[service.lower()] }}</a></li>
 				{% endfor %}
 			</ul>
 
 			<p>Live long and prosper.</p>
-			<p> Extra content: </p>
 			
 			 <!-- End content area. -->
 

@@ -5,7 +5,7 @@ import yaml
 
 app = Flask(__name__)
 
-welcome = "Welcome to Starbase 003"
+welcome = "Welcome to Starbase 0420-69"
 subtitle = "Holodeck Entertainment Management System"
 warning_file = "warning_file.yaml"
 
@@ -17,12 +17,23 @@ def get_warning_services():
     services = d['services']
     print(d)
     print(services)
-    urls = d['service_urls']
-    
+    ports = d['service_urls']
+    default_server = d['default_server'] 
+    urls = {}
+    for service,port in ports.items():
+        urls[service] = f'{default_server}:{port}'
+        if service in d['service_ovr'].keys():
+            urls[service] = f'{d["service_ovr"]}:{port}'
+
+    top_service_names = d['top_services']
+    top_services = {}
+    for top_service in top_service_names:
+        top_services[top_service] = urls[top_service]
+
     days += random.randint(1,10)
     with open(warning_file,'w') as f:
         yaml.dump(d,f)
-    return days,services,urls
+    return days,services,urls, top_services
 
 
 def generate_warning_services():
@@ -30,7 +41,7 @@ def generate_warning_services():
     warning = f"{days} days since last major holodeck malfunction"
     srv_msg = []
     nl = '\n'.join(srv_msg)
-    service_list = f"<ul>\n{nl}\n</ul> "
+    service_list = "<ul>\n" + f"{nl}" + "\n</ul> "
 
 
     return warning,services,urls
@@ -39,11 +50,16 @@ def generate_warning_services():
 
 @app.route('/')
 def index():
-    warning, services, urls = generate_warning_services()
+    warning, services, urls, top_services = generate_warning_services()
     print("-----")
     print(urls)
     print("-----")
-    return render_template('main.html',welcome=welcome,subtitle=subtitle,warning=warning,services=services,urls=urls)
+    
+    ts_names = list(top_services)
+    ts_d = top_services
+    print(ts_names)
+    print(ts_d)
+    return render_template('main.html',ts_names=ts_names,ts_d=ts_d,welcome=welcome,subtitle=subtitle,warning=warning,services=services,urls=urls)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0',port=9999)

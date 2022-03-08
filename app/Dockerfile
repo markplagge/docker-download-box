@@ -19,4 +19,4 @@ COPY ./flask-reverse-proxy /app/flask-reverse-proxy/
 
 
 ENTRYPOINT [ "python3" ]
-CMD [ "app.py" ]
+CMD [ "app.py --host=0.0.0.0" ]
