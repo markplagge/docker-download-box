@@ -1,0 +1,12 @@
+version: "3.2"
+visualizer:
+  image: dockersamples/visualizer:latest
+  ports:
+    - 8099:8080
+  volumes:
+    - "/var/run/docker.sock:/var/run/docker.sock"
+  deploy:
+    placement:
+      constraints: [node.role == manager]
+  networks:
+    - app

@@ -7,11 +7,14 @@ services:
       - PUID=1000
       - PGID=1024
       - VERSION=docker
-      - PLEX_CLAIM=claim-r5--d4z2a9oB7zszwMFw #optional
+      - DOCKER_MODS=linuxserver/mods:plex-absolute-hama
+        #      - PLEX_CLAIM=claim-r5--d4z2a9oB7zszwMFw #optional
     volumes:
-      - /opt/remotefs/media_server/config:/config
+      #- /opt/remotefs/media_server/config:/config
+      - /home/mplagge/plex_data:/config
       - /opt/remotefs/media_server/complete/tv:/tv
       - /opt/remotefs/media_server/complete/movies:/movies
+      - /opt/remotefs/media_server/complete:/complete
     restart: unless-stopped
     ports:
       - "32400:32400" 

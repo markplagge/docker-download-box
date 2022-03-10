@@ -1,0 +1,26 @@
+version: "3.2"
+
+services:
+    organizr:
+        hostname: organizr
+
+        ports:
+        - "81:80"
+        image: ghcr.io/organizr/organizr
+        environment:
+          - PUID=1000
+          - PGID=1024
+          - TZ=America/Denver
+          - fpm=true
+        volumes:
+          - organizr_vol:/config
+
+volumes:
+    organizr_vol:
+      driver: local
+      driver_opts:
+        o: bind
+        device: /opt/remotefs/docker/org
+        type: none
+
+
