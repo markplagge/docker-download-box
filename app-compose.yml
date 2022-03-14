@@ -1,0 +1,22 @@
+services:
+    main_app:
+        hostname: app
+        ports:
+                - "9999:9999"
+        container_name: app
+        image:  plaggm/ddb-flask-app
+        restart: unless-stopped
+    main_nginx:
+        container_name: tracker_nginx
+        image: nginx
+        environment:
+            - PUID=${PUID}
+            - PGID=${PGID:-1111}
+            - TZ=${TZ}
+        volumes:
+            - ${TRACKER_NGINX_CONFIG}:/etc/nginx/nginx.conf:ro
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        depends_on:
+            - main_app

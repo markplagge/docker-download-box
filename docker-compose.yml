@@ -10,13 +10,13 @@ services:
 
         
         environment:
-        - PUID=1000 # default user id, defined in .env
-        - PGID=1024 # default group id, defined in .env
-        - TZ=America/Denver # timezone, defined in .env
+        - PUID=${PUID} # default user id, defined in .env
+        - PGID=${PGID} # default group id, defined in .env
+        - TZ=${TZ} # timezone, defined in .env
         volumes:
         - /etc/localtime:/etc/localtime:ro
-        - /opt/remotefs/media_server/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
-        - /opt/remotefs/media_server/config/jackett:/config
+        - ${MEDIA_SERVER}/downloads/torrent-blackhole:/downloads # place where to put .torrent files for manual download
+        - ${MEDIA_SERVER}/config/jackett:/config
     sonarr:
         hostname: sonarr
         container_name: sonarr
@@ -25,14 +25,14 @@ services:
         ports:
             - "8989:8989" 
         environment:
-            - PUID=1000 # default user id, defined in .env
-            - PGID=1024 # default group id, defined in .env
-            - TZ=America/Denver # timezone, defined in .env
+            - PUID=${PUID} # default user id, defined in .env
+            - PGID=${PGID} # default group id, defined in .env
+            - TZ=${TZ} # timezone, defined in .env
         volumes:
             - /etc/localtime:/etc/localtime:ro
-            - /opt/remotefs/media_server/config/sonarr:/config # config files
-            - /opt/remotefs/media_server/complete/tv:/tv # tv shows folder
-            - /opt/remotefs/media_server/downloads:/downloads # download folder
+            - ${MEDIA_SERVER}/config/sonarr:/config # config files
+            - ${MEDIA_SERVER}/complete/tv:/tv # tv shows folder
+            - ${MEDIA_SERVER}/downloads:/downloads # download folder
     
     radarr:
         hostname: radarr
@@ -42,35 +42,12 @@ services:
         ports:
             - "7878:7878"
         environment:
-            - PUID=1000 # default user id, defined in .env
-            - PGID=1024 # default group id, defined in .env
-            - TZ=America/Denver # timezone, defined in .env
+            - PUID=${PUID} # default user id, defined in .env
+            - PGID=${PGID} # default group id, defined in .env
+            - TZ=${TZ} # timezone, defined in .env
         volumes:
             - /etc/localtime:/etc/localtime:ro
-            - /opt/remotefs/media_server/config/radarr:/config # config files
-            - /opt/remotefs/media_server/complete/movies:/movies # movies folder
-            - /opt/remotefs/media_server/downloads:/downloads # download folder
-    main_app:
-        hostname: app
-        ports:
-                - "9999:9999"
-        container_name: app
-        image:  plaggm/ddb-flask-app
-        restart: unless-stopped
-        #    main_nginx:
-        #        container_name: tracker_nginx
-        #        image: nginx
-        #        environment:
-        #            - PUID=${PUID:-1000}
-        #            - PGID=${PGID:-1111}
-        #            - TZ=America/Denver
-        #        volumes:
-        #            - ${TRACKER_NGINX_CONFIG}:/etc/nginx/nginx.conf:ro
-        #        restart: unless-stopped
-        #        ports:
-        #            - "80:80"
-        #        depends_on:
-        #            - main_app
-        #            - sonarr
-        #            - radarr
-        #            - jackett
+            - ${MEDIA_SERVER}/config/radarr:/config # config files
+            - ${MEDIA_SERVER}/complete/movies:/movies # movies folder
+            - ${MEDIA_SERVER}/downloads:/downloads # download folder
+
