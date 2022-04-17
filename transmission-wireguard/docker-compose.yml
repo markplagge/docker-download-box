@@ -30,8 +30,8 @@
      container_name: transmission
      environment:
        - PUID=1000
-       - PGID=100
-       - TZ=US/Denver
+       - PGID=1024
+       - TZ=US/Mountain
  #      - TRANSMISSION_WEB_HOME=/combustion-release/ 
  #optional
  #      - USER=user #optional
@@ -42,7 +42,23 @@
        - ${MEDIA_SERVER_ROOT}/downloads/watch:/watch
      network_mode: service:wireguard
      restart: unless-stopped
- 
+   deluge:
+    image: lscr.io/linuxserver/deluge
+    container_name: deluge
+    environment:
+      - PUID=1000
+      - PGID=1024
+      - TZ=US/Mountain
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - ${MEDIA_SERVER_ROOT}/config/deluge:/config
+      - ${MEDIA_SERVER_ROOT}/downloads/deluge:/downloads
+    #ports:
+        #- 8112:8112
+        #- 6881:6881
+        #- 6881:6881/udp
+    restart: unless-stopped 
+    network_mode: service:wireguard
    nginx:
      image: nginx
      container_name: nginx
@@ -54,6 +70,21 @@
        - ${NGINX_CONFIG}:/etc/nginx/nginx.conf:ro
      ports:
        - 9091:9091
+         #- 8112:8112
+     restart: unless-stopped
+   nginxde:
+        
+     image: nginx
+     container_name: nginxde
+     environment:
+        - PUID=${PUID:-1000}
+        - PGID=${PGID:-1111}
+        - TZ=${TZ}
+     volumes:
+       - ${NGINX_CONFIG_DE}:/etc/nginx/nginx.conf:ro
+     ports:
+             - 8112:8112
+         #- 8112:8112
      restart: unless-stopped
 
  
